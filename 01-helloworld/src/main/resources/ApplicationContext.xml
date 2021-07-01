@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--注册一个Person对象，Spring会自动创建这个Person对象
+        class:写要注册的组件的全类名
+        id:这个对象的唯一标识
+    -->
+    <bean id="person01" class="com.xiao.helloworld.bean.Person">
+        <!--使用property标签为Person对象的属性赋值
+            name:指定属性名
+            value:指定属性值
+         -->
+        <property name="lastName" value="zhangsan"/>
+        <property name="age" value="20"/>
+        <property name="email" value="zhangsan@163.com"/>
+        <property name="gender" value="0"/>
+    </bean>
+
+    <!--通过构造函数中的参数名称注入-->
+    <bean id="person02" class="com.xiao.helloworld.bean.Person">
+        <constructor-arg name="lastName" value="wangwu"/>
+        <constructor-arg name="age" value="30"/>
+        <constructor-arg name="gender" value="1"/>
+        <constructor-arg name="email" value="wangwu@qq.com"/>
+    </bean>
+
+    <!--默认按顺序寻找构造方法进行匹配-->
+    <bean id="person03" class="com.xiao.helloworld.bean.Person">
+        <constructor-arg value="wangwu"/>
+        <constructor-arg value="30"/>
+        <constructor-arg value="1"/>
+        <constructor-arg value="wangwu@qq.com"/>
+    </bean>
+
+    <!--通过构造函数参数类型，默认按照顺序-->
+    <bean id="person04" class="com.xiao.helloworld.bean.Person">
+        <constructor-arg type="java.lang.String" value="wangwu"/>
+        <constructor-arg type="java.lang.Integer" value="30"/>
+        <constructor-arg type="java.lang.String" value="1"/>
+        <constructor-arg type="java.lang.String" value="wangwu@qq.com"/>
+    </bean>
+
+    <!--通过构造函数参数索引-->
+    <bean id="person05" class="com.xiao.helloworld.bean.Person">
+        <constructor-arg index="0" value="wangwu"/>
+        <constructor-arg index="1" value="30"/>
+        <constructor-arg index="2" value="1"/>
+        <constructor-arg index="3" value="wangwu@qq.com"/>
+    </bean>
+
+
+    <!--p名称空间注入-->
+    <bean id="person06" class="com.xiao.helloworld.bean.Person"
+          p:lastName="zhangsan" p:age="30" p:email="zhangsan@qq.com" p:gender="1">
+    </bean>
+    <!--c命名空间注入-->
+    <bean id="person07" class="com.xiao.helloworld.bean.Person"
+          c:lastName="zhangsan" c:age="30" c:email="zhangsan@qq.com" c:gender="1">
+    </bean>
+
+
+<!--    <bean id="student01" class="com.xiao.helloworld.bean.Student">-->
+<!--        <property name="name" value="null"/>-->
+<!--    </bean>-->
+    <bean id="student01" class="com.xiao.helloworld.bean.Student">
+        <property name="name" >
+            <null/>
+        </property>
+    </bean>
+
+    <!--先注册一个Address对象-->
+    <bean id="address01" class="com.xiao.helloworld.bean.Address">
+        <property name="name" value="beijing"/>
+        <property name="num" value="001"/>
+    </bean>
+
+    <bean id="student02" class="com.xiao.helloworld.bean.Student">
+        <!--通过id值引用-->
+        <property name="address" ref="address01"/>
+    </bean>
+
+    <bean id="student03" class="com.xiao.helloworld.bean.Student">
+        <property name="address">
+            <bean class="com.xiao.helloworld.bean.Address">
+                <property name="name" value="tianijng"/>
+                <property name="num" value="002"/>
+            </bean>
+        </property>
+
+        <property name="books">
+            <array>
+                <value>西游记</value>
+                <value>红楼梦</value>
+                <value>水浒传</value>
+            </array>
+        </property>
+
+        <property name="hobbies">
+            <list>
+                <value>玩游戏</value>
+                <value>看电影</value>
+            </list>
+        </property>
+
+        <property name="card">
+            <map>
+                <entry key="中行" value="001"/>
+                <entry key="邮政" value="002"/>
+            </map>
+        </property>
+
+        <property name="info">
+            <props>
+                <prop key="学号">20190604</prop>
+                <prop key="性别">男</prop>
+                <prop key="姓名">小明</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="person01" class="com.xiao.helloworld.bean.Person">
+        <property name="lastName" value="zhangsan"/>
+        <property name="age" value="20"/>
+        <property name="email" value="zhangsan@163.com"/>
+        <property name="gender" value="0"/>
+    </bean>
+
+    <!--parent：要重用的配置信息 -->
+    <bean id="person001" class="com.xiao.helloworld.bean.Person" parent="person01">
+        <!--单独修改name属性的值 -->
+        <property name="lastName" value="zhang"/>
+    </bean>
+
+</beans>
